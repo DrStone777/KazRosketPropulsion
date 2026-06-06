@@ -1,1 +1,32 @@
+import matplotlib.pyplot as plt
 
+
+dt = 0.1
+t, h, v = 0, 0, 0
+thrust = 20  
+mass = 1.2    
+g = 9.81
+
+times, heights = [], []
+
+for i in range(300):
+    if t < 10:             
+        a = thrust/mass - g
+    else:                  
+        a = -g
+
+    v = v + a * dt
+    h = h + v * dt
+    if h < 0:
+        break
+
+    times.append(t)
+    heights.append(h)
+    t += dt
+
+plt.plot(times, heights)
+plt.xlabel("время (с)")
+plt.ylabel("высота (м)")
+plt.title("моя первая ракета")
+plt.grid(True)
+plt.show()
