@@ -30,3 +30,47 @@ plt.ylabel("высота (м)")
 plt.title("моя первая ракета")
 plt.grid(True)
 plt.show()
+
+
+
+
+SECOND CODE:
+
+import matplotlib.pyplot as plt
+
+dt = 0.01  # Reduced the step size for greater accuracy (0.01 s)
+t, h, v = 0, 0, 0
+thrust = 17.66
+mass = 1.2
+g = 9.81
+mfuel = 0.3
+mdot = mfuel / 10
+
+times, heights = [t], [h]
+
+# The cycle continues until the rocket hits the ground (or while it is still on the launch pad)
+while t == 0 or h > 0:
+    # Check if the fuel is still burning (first 10 seconds)
+    if t < 10:
+        a = thrust / mass - g
+        mass = mass - mdot * dt
+    else:
+        a = -g
+
+    v = v + a * dt
+    h = h + v * dt
+    t += dt
+
+    # Protection against sinking into the ground during the final step
+    if h < 0:
+        break
+
+    times.append(t)
+    heights.append(h)
+       
+plt.plot(times, heights)
+plt.xlabel("time (sec)")
+plt.ylabel("height (m)")
+plt.title("Rocket")
+plt.grid(True)
+plt.show()
