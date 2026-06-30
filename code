@@ -74,3 +74,35 @@ plt.ylabel("height (m)")
 plt.title("Rocket")
 plt.grid(True)
 plt.show()
+
+
+import requests
+import numpy as np
+url = "https://cdn.jsdelivr.net/npm/thrustcurve-db@latest/thrustcurve-db.json"
+data = requests.get(url).json()
+
+results =  []
+for motor in data:
+    samples = motor.get("samples")
+    prop_weight_g = motor.get("propWeightG")
+    if not samples or not prop_weight_g: 
+        continue
+    total_impulse = motor.get("totImpulseNs")
+    g = 9.81
+    times = []
+    thrusts = []
+    prop_weight_g_kg = prop_weight_g / 1000
+    for t , f in samples:
+        times.append(t)
+        thrusts.append(f)
+
+    my_impulse = np.trapezoid(thrusts,times)
+
+    my_Isp = total_impulse / (prop_weight_g_kg * g)
+    results.append(my_Isp)
+
+print(total_impulse)
+print(my_impulse)
+print(results[:5])
+
+
