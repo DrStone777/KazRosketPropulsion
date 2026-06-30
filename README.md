@@ -29,4 +29,4 @@ TODO tomorrow:
 - Rewrite results.append() to use a dictionary with manufacturer/diameter/impulseClass/
   my_Isp instead of a list
 
-Translated with DeepL.com (free version)
+
